@@ -1,17 +1,29 @@
-# lugares_uide
+# Evaluación Sumativa Individual - Programación Móvil
 
-A new Flutter project.
+**Estudiante:** Jhandry David Becerra Lima  
+**Variante:** B  
+**Proyecto:** Lugares UIDE - App de registro de lugares con geolocalización
 
-## Getting Started
+## Descripción
+Aplicación Flutter que permite registrar lugares con nombre, descripción y coordenadas GPS. Incluye funcionalidad de favoritos y seguimiento de ubicación en tiempo real.
 
-This project is a starting point for a Flutter application.
+## Correcciones realizadas
 
-A few resources to get you started if this is your first Flutter project:
+### 🐛 Bug corregido (TODO diagnóstico)
+**Archivo:** `lib/screens/ubicacion_screen.dart` - método `dispose()`
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+**Problema:** Al salir de la pantalla "Mi ubicación", el `StreamSubscription` del GPS no se cancelaba, causando un memory leak. El stream seguía activo en segundo plano (los prints seguían apareciendo en consola).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Solución:** Se agregó `_subscription?.cancel()` en el método `dispose()` para detener el stream de ubicación al salir de la pantalla.
+
+### ✨ Feature nuevo (TODO feature)
+**Archivo:** `lib/screens/ubicacion_screen.dart` - método `build()`
+
+**Funcionalidad:** Se implementó el cálculo de distancia entre la posición actual del usuario y el campus UIDE Loja usando `Geolocator.distanceBetween()`. Si la distancia es menor a 500 metros, muestra un ícono verde con el mensaje "Estás cerca del campus UIDE". Si está más lejos, muestra la distancia en kilómetros con un ícono naranja.
+
+## Cómo ejecutar
+```bash
+flutter create .
+flutter pub get
+flutter run
+```
